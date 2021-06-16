@@ -1,5 +1,10 @@
 package com.techelevator.projects.model;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+
+import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface DepartmentDAO {
@@ -10,6 +15,7 @@ public interface DepartmentDAO {
 	 * @return all departments as Department objects in a List
 	 */
 	public List<Department> getAllDepartments();
+
 
 	/**
 	 * Get all the departments whose name contains the search string. Remember
