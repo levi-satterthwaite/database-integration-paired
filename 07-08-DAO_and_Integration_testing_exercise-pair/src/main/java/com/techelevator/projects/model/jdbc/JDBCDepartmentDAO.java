@@ -22,7 +22,7 @@ public class JDBCDepartmentDAO implements DepartmentDAO {
 	@Override
 	public List<Department> getAllDepartments() {
 
-			String sql = "SELECT name " +
+			String sql = "SELECT department_id, name " +
 					"FROM department";
 
 			SqlRowSet rows = jdbcTemplate.queryForRowSet(sql);
@@ -40,8 +40,9 @@ public class JDBCDepartmentDAO implements DepartmentDAO {
 
 		String sql = "SELECT name " +
 		"FROM department " +
-		"WHERE name LIKE '*'?'*'"; // couldn't figure out how to use %s
+		"WHERE name LIKE ?";
 
+		nameSearch = "%" + nameSearch + "%";
 		SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, nameSearch);
 
 		List<Department> departments = new ArrayList<Department>();
@@ -60,7 +61,7 @@ public class JDBCDepartmentDAO implements DepartmentDAO {
 				"WHERE department_id = ?";
 
 		jdbcTemplate.update(sql, updatedDepartment.getName(), updatedDepartment.getId());
-	} // no error but doesn't update
+	}
 
 	//public void update(Address address) {
 		//String sql = "UPDATE address SET " +
@@ -73,11 +74,10 @@ public class JDBCDepartmentDAO implements DepartmentDAO {
 
 	@Override
 	public Department createDepartment(Department newDepartment) {
-		String sql = "INSERT INTO department (department_id, name) " +
-				"VALUES (DEFAULT, ?) RETURNING department_id ";
-		SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, newDepartment.getId(), newDepartment.getName());
-		rows.next();
-		newDepartment.setId( rows.getLong("department_id"));
+		String sql = "INSERT INTO department (name) " +
+				"VALUES (?)";
+
+		jdbcTemplate.update(sql, newDepartment.getName());
 
 		return newDepartment;
 	}
@@ -101,6 +101,7 @@ public class JDBCDepartmentDAO implements DepartmentDAO {
 		Department department = new Department();
 
 		department.setName(row.getString("name"));
+		department.setId(row.getLong("department_id"));
 
 		return department;
 	}
