@@ -5,6 +5,9 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import com.techelevator.model.jdbc.JDBCVenueDAO;
 import com.techelevator.model.VenueDAO;
 import com.techelevator.model.Venue;
+import com.techelevator.model.jdbc.JDBCSpaceDAO;
+import com.techelevator.model.SpaceDAO;
+import com.techelevator.model.Space;
 import com.techelevator.view.VenueMenu;
 
 import java.util.Arrays;
@@ -16,6 +19,7 @@ public class ExcelsiorCLI {
 
 	private VenueMenu menu;
 	private VenueDAO venueDAO;
+	private SpaceDAO spaceDAO;
 	private JDBCVenueDAO jdbcVenueDAO;
 
 	public static void main(String[] args) {
@@ -32,6 +36,7 @@ public class ExcelsiorCLI {
 		this.menu = new VenueMenu();
 		// create your DAOs here
 		venueDAO = new JDBCVenueDAO(dataSource);
+		spaceDAO = new JDBCSpaceDAO(dataSource);
 	}
 
 
@@ -46,9 +51,16 @@ public class ExcelsiorCLI {
 			//MAIN MENU options 1 for List Venues, Q for Quit Program
 			if(userChoice.equals("1")) {
 				menu.viewVenuesMenu();
+
 				List<Venue> allVenues = venueDAO.getAllVenues();
 				String input = menu.listVenues(allVenues);
-				menu.venueDetailsMenu(allVenues, input);
+				String venueMenuInput = menu.venueDetailsMenu(allVenues, input);
+
+				if(venueMenuInput.equals("1")) {
+					int venueId = menu.venueIndexToVenueId(allVenues, input);
+					List<Space> venueSpacesList = spaceDAO.getSpacesByVenue(venueId);
+					menu.venueSpaces(allVenues, venueSpacesList, venueId, input);
+				}
 
 			} else if(userChoice.equalsIgnoreCase("Q")) {
 				return;

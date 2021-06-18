@@ -13,8 +13,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -29,13 +29,18 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../levisatterthwaite-java-blue/module-1/05_Command_Line_Programs/lecture-final" />
     <property name="settings.editor.selected.configurable" value="terminal" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.techelevator" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="ExcelsiorCLI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.techelevator.ExcelsiorCLI" />
       <module name="m2-capstone-excelsior-venues" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.techelevator.*" />
+          <option name="PATTERN" value="com.techelevator.model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>

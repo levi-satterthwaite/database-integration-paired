@@ -13,7 +13,7 @@ import com.techelevator.model.VenueDAO;
 import com.techelevator.model.Venue;
 import java.util.List;
 
-public abstract class DAOIntegrationTest {
+public abstract class VenueDAOIntegrationTest {
 
 	/*
 	 * Using this particular implementation of DataSource so that every database
