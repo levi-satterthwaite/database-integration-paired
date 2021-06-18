@@ -1,8 +1,7 @@
-package com.techelevator;
+package com.techelevator.model.jdbc;
 
 import com.techelevator.model.Venue;
 import com.techelevator.model.VenueDAO;
-import com.techelevator.model.jdbc.JDBCVenueDAO;
 import org.junit.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;

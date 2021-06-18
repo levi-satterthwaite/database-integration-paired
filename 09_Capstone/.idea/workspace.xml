@@ -13,8 +13,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -30,6 +30,10 @@
     <property name="settings.editor.selected.configurable" value="terminal" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.techelevator.model.jdbc" />
+      <recent name="com.techelevator.model" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.techelevator" />
     </key>
@@ -40,7 +44,7 @@
       <module name="m2-capstone-excelsior-venues" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.techelevator.model.*" />
+          <option name="PATTERN" value="com.techelevator.model.jdbc.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>

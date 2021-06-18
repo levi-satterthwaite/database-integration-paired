@@ -10,7 +10,6 @@ import com.techelevator.model.SpaceDAO;
 import com.techelevator.model.Space;
 import com.techelevator.view.VenueMenu;
 
-import java.util.Arrays;
 import java.util.List;
 
 // This class should control the workflow of the application, but not do any other work
