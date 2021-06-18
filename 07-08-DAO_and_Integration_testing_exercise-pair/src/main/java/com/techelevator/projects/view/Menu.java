@@ -5,6 +5,8 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+
+
 public class Menu {
 
 	private PrintWriter out;
@@ -33,7 +35,7 @@ public class Menu {
 				choice = options[selectedOption - 1];
 			}
 		} catch(NumberFormatException e) {
-			// eat the exception, an error message will be displayed below since choice will be null
+		// eat the exception, an error message will be displayed below since choice will be null
 		}
 		if(choice == null) {
 			out.println("\n*** "+userInput+" is not a valid option ***\n");
