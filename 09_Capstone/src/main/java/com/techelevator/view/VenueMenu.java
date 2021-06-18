@@ -8,14 +8,17 @@ import java.util.List;
 import com.techelevator.model.Venue;
 import com.techelevator.model.VenueDAO;
 import com.techelevator.model.jdbc.JDBCVenueDAO;
+import org.apache.commons.dbcp2.BasicDataSource;
 
 // all usage of System.out or System.in will be in this class
 public class VenueMenu {
 
+
     private final Scanner in = new Scanner(System.in);
-    private VenueDAO venueDAO;
-    private Venue venue;
-    private JDBCVenueDAO jdbcVenueDAO;
+    //private VenueDAO venueDAO = new JDBCVenueDAO(dataSource);
+
+
+
 
     /**
      * main menu displayed when program runs, user chooses to see venue list or quit program
@@ -40,7 +43,7 @@ public class VenueMenu {
     public void viewVenuesMenu() {
         //Scanner in = new Scanner(System.in);
 
-        List<Venue> allVenues = jdbcVenueDAO.getAllVenues();
+        List<Venue> allVenues = venueDAO.getAllVenues();
         System.out.println();
         System.out.println("Which venue would you like to view?");
         System.out.println(allVenues);

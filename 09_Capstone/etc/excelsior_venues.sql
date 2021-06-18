@@ -1,3 +1,5 @@
+--CREATE DATABASE excelsior_venues;
+
 START TRANSACTION;
 
 DROP TABLE IF EXISTS category_venue;
