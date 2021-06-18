@@ -1,4 +1,4 @@
---CREATE DATABASE projects;
+CREATE DATABASE projects;
 
 BEGIN TRANSACTION;
 
@@ -9,6 +9,22 @@ CREATE TABLE department (
 	name varchar(40) UNIQUE NOT NULL,
 	CONSTRAINT PK_department PRIMARY KEY (department_id)
 );
+
+
+SELECT department_id, first_name, last_name, birth_date, hire_date
+FROM employee
+JOIN project_employee ON project_employee.employee_id = employee.employee_id
+WHERE employee.employee_id IS NOT NULL;
+
+UPDATE employee
+SET department_id = ?
+WHERE employee_id = ?;
+
+SELECT *
+FROM project_employee;
+START TRANSACTION;
+ROLLBACK;
+
 
 CREATE TABLE employee (
 	employee_id serial,

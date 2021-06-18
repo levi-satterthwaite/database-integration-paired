@@ -4,10 +4,14 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import com.techelevator.model.jdbc.JDBCVenueDAO;
+import org.junit.*;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+import com.techelevator.model.VenueDAO;
+import com.techelevator.model.Venue;
+import java.util.List;
 
 public abstract class DAOIntegrationTest {
 
@@ -17,6 +21,9 @@ public abstract class DAOIntegrationTest {
 	 * transaction
 	 */
 	private static SingleConnectionDataSource dataSource;
+	private JdbcTemplate jdbcTemplate;
+	private VenueDAO venueDAO;
+	private Venue venue;
 
 	/*
 	 * Before any tests are run, this method initializes the datasource for testing.
@@ -58,4 +65,21 @@ public abstract class DAOIntegrationTest {
 	protected DataSource getDataSource() {
 		return dataSource;
 	}
+
+	@Before
+	public void setupBeforeTest() {
+		venueDAO = new JDBCVenueDAO(dataSource);
+		jdbcTemplate = new JdbcTemplate(dataSource);
+	}
+
+	/**
+	TESTING SELECT with multiple objects being returned
+	 **/
+	@Test
+	public void retrieve_multiple_venues() {
+		//Arrange
+		//Get a count of number of values in the table
+		List<Venue> venueList = venueDAO.getAllVenues();
+	}
+
 }

@@ -18,12 +18,6 @@ public class ExcelsiorCLI {
 	private VenueDAO venueDAO;
 	private JDBCVenueDAO jdbcVenueDAO;
 
-	private static final String MAIN_MENU_OPTION_VENUES = "List Venues";
-	private static final String MAIN_MENU_OPTION_QUIT = "Quit";
-	private static final String[] MAIN_MENU_OPTIONS = new String[]{MAIN_MENU_OPTION_VENUES, MAIN_MENU_OPTION_QUIT};
-
-	public String venueName = "";
-
 	public static void main(String[] args) {
 		BasicDataSource dataSource = new BasicDataSource();
 		dataSource.setUrl("jdbc:postgresql://localhost:5432/excelsior_venues");
@@ -36,7 +30,6 @@ public class ExcelsiorCLI {
 
 	public ExcelsiorCLI(BasicDataSource dataSource) {
 		this.menu = new VenueMenu();
-
 		// create your DAOs here
 		venueDAO = new JDBCVenueDAO(dataSource);
 	}
@@ -44,30 +37,28 @@ public class ExcelsiorCLI {
 
 	public void run() {
 
-			menu.mainMenu();
+		menu.mainMenu();
 
 			while(true) {
 
 			String userChoice = menu.userChoice();
 
+			//MAIN MENU options 1 for List Venues, Q for Quit Program
 			if(userChoice.equals("1")) {
 				menu.viewVenuesMenu();
-				// display list of venues from DAO
+				List<Venue> allVenues = venueDAO.getAllVenues();
+				String input = menu.listVenues(allVenues);
+				menu.venueDetailsMenu(allVenues, input);
 
-			} else if(userChoice.equals("Q")) {
+			} else if(userChoice.equalsIgnoreCase("Q")) {
 				return;
 			}
-	}
 
-
-//	public void listVenues(List<Venue> venues){
-//		if(venues.size() > 0) {
-//			for(Venue venue : venues) {
-//				venueName = (venue.getName());
-//			}
-//		} else {
-//			venueName = ("*** No results ***");
-//		}
+			//VIEW VENUES options 1,2,.. for Selecting Venue, R for Return to Previous Screen
+			if(userChoice.equalsIgnoreCase("R")) {
+				menu.mainMenu();
+			}
+		}
 	}
 }
 
