@@ -2,6 +2,7 @@ package com.techelevator.view;
 
 import java.util.Scanner;
 import javax.sql.DataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +16,11 @@ public class VenueMenu {
     private final Scanner in = new Scanner(System.in);
     private VenueDAO venueDAO;
     private Venue venue;
-    private JDBCVenueDAO jdbcVenueDAO;
+    //private JDBCVenueDAO jdbcVenueDAO;
 
     /**
      * main menu displayed when program runs, user chooses to see venue list or quit program
+     *
      * @return user selection of 1 or Q as a String
      */
     public void mainMenu() {
@@ -40,10 +42,21 @@ public class VenueMenu {
     public void viewVenuesMenu() {
         //Scanner in = new Scanner(System.in);
 
-        List<Venue> allVenues = jdbcVenueDAO.getAllVenues();
         System.out.println();
         System.out.println("Which venue would you like to view?");
-        System.out.println(allVenues);
+        System.out.println();
     }
 
+    public void listVenues(List<Venue> venues) {
+
+
+        if (venues.size() > 0) {
+            for (Venue venue : venues) {
+                System.out.println(venue.getName());
+            }
+        } else {
+            System.out.println("*** No results ***");
+        }
+
+    }
 }

@@ -52,12 +52,15 @@ public class ExcelsiorCLI {
 
 			if(userChoice.equals("1")) {
 				menu.viewVenuesMenu();
+				List<Venue> allVenues = venueDAO.getAllVenues();
+				menu.listVenues(allVenues);
 				// display list of venues from DAO
 
 			} else if(userChoice.equals("Q")) {
 				return;
 			}
 	}
+
 
 
 //	public void listVenues(List<Venue> venues){
