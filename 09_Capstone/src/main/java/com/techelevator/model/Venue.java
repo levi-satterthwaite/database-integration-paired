@@ -4,6 +4,7 @@ public class Venue {
 
     private int id;
     private String name;
+    private int city_id;
     private String city_name;
     private String description;
     private String state_abbreviation;
@@ -22,6 +23,12 @@ public class Venue {
         this.id = id;
     }
 
+    public int getCity_id() {
+        return city_id;
+    }
+    public void setCity_id(int city_id) {
+        this.city_id = city_id;
+    }
     public String getCity_name() {
         return city_name;
     }

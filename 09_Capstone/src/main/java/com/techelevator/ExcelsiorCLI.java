@@ -1,5 +1,6 @@
 package com.techelevator;
 
+import com.techelevator.model.jdbc.JDBCReservationDAO;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import com.techelevator.model.jdbc.JDBCVenueDAO;
@@ -8,6 +9,9 @@ import com.techelevator.model.Venue;
 import com.techelevator.model.jdbc.JDBCSpaceDAO;
 import com.techelevator.model.SpaceDAO;
 import com.techelevator.model.Space;
+import com.techelevator.model.jdbc.JDBCReservationDAO;
+import com.techelevator.model.ReservationDAO;
+import com.techelevator.model.Reservation;
 import com.techelevator.view.VenueMenu;
 
 import java.util.List;
@@ -19,6 +23,7 @@ public class ExcelsiorCLI {
 	private VenueMenu menu;
 	private VenueDAO venueDAO;
 	private SpaceDAO spaceDAO;
+	private ReservationDAO reservationDAO;
 	private JDBCVenueDAO jdbcVenueDAO;
 
 	public static void main(String[] args) {
@@ -36,6 +41,7 @@ public class ExcelsiorCLI {
 		// create your DAOs here
 		venueDAO = new JDBCVenueDAO(dataSource);
 		spaceDAO = new JDBCSpaceDAO(dataSource);
+		reservationDAO = new JDBCReservationDAO(dataSource);
 	}
 
 
@@ -58,16 +64,16 @@ public class ExcelsiorCLI {
 				if(venueMenuInput.equals("1")) {
 					int venueId = menu.venueIndexToVenueId(allVenues, input);
 					List<Space> venueSpacesList = spaceDAO.getSpacesByVenue(venueId);
-					menu.venueSpaces(allVenues, venueSpacesList, venueId, input);
-				}
+					String venueSpacesInput = menu.venueSpaces(allVenues, venueSpacesList, venueId, input);
 
+
+					if(venueSpacesInput.equals("1")) {
+						menu.reserveSpace(venueSpacesList);
+						//List<Space> spacesBySearch = reservationDAO.getAvailableSpacesByDateIdAndOccupancy();
+					}
+				}
 			} else if(userChoice.equalsIgnoreCase("Q")) {
 				return;
-			}
-
-			//VIEW VENUES options 1,2,.. for Selecting Venue, R for Return to Previous Screen
-			if(userChoice.equalsIgnoreCase("R")) {
-				menu.mainMenu();
 			}
 		}
 	}

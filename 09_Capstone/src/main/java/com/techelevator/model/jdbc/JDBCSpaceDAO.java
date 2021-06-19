@@ -5,6 +5,7 @@ import com.techelevator.model.SpaceDAO;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import java.math.BigDecimal;
+import java.sql.Date;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -52,7 +53,25 @@ public class JDBCSpaceDAO implements SpaceDAO {
         return spaces;
     }
 
+    @Override
+    public List<Space> getAvailableSpacesByDateIdAndOccupancy(String start_date, String end_date, int peopleAttending, int space_id){
+        String sql = "SELECT space_id, space.venue_id, space.name, space.max_occupancy " +
+                "FROM reservation " +
+                "JOIN space ON space.id = reservation.space_id " +
+                "WHERE ? NOT BETWEEN start_date AND end_date AND ? NOT BETWEEN start_date AND end_date AND start_date NOT BETWEEN ? AND ? AND space.max_occupancy >= ? AND space.id = ? " +
+                "GROUP BY space.id " +
+                "LIMIT 5";
 
+        SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, start_date, end_date, start_date, end_date, peopleAttending, space_id);
+
+        List<Space> availableSpaces = new ArrayList<Space>();
+
+        while(rows.next()) {
+            Space space = mapRowToSpaces( rows);
+            availableSpaces.add( space );
+        }
+        return availableSpaces;
+    }
 
     private Space mapRowToSpaces (SqlRowSet row) {
         Space space = new Space();

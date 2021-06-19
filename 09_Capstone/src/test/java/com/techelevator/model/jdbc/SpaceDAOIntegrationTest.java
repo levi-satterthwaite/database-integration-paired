@@ -1,10 +1,11 @@
 package com.techelevator.model.jdbc;
 
-import com.techelevator.model.Venue;
-import com.techelevator.model.VenueDAO;
+import com.techelevator.model.Space;
+import com.techelevator.model.SpaceDAO;
 import org.junit.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -19,8 +20,7 @@ public abstract class SpaceDAOIntegrationTest {
 	 */
 	private static SingleConnectionDataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
-	private VenueDAO venueDAO;
-	private Venue venue;
+	private SpaceDAO spaceDAO;
 
 	/*
 	 * Before any tests are run, this method initializes the datasource for testing.
@@ -42,7 +42,7 @@ public abstract class SpaceDAOIntegrationTest {
 	 * After all tests have finished running, this method will close the DataSource
 	 */
 	@AfterClass
-	public static void closeDataSource() throws SQLException {
+	public static void closeDataSource() {
 		dataSource.destroy();
 	}
 
@@ -65,7 +65,7 @@ public abstract class SpaceDAOIntegrationTest {
 
 	@Before
 	public void setupBeforeTest() {
-		venueDAO = new JDBCVenueDAO(dataSource);
+		spaceDAO = new JDBCSpaceDAO(dataSource);
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
@@ -73,10 +73,10 @@ public abstract class SpaceDAOIntegrationTest {
 	TESTING SELECT with multiple objects being returned
 	 **/
 	@Test
-	public void retrieve_multiple_venues() {
+	public void retrieve_multiple_spaces() {
 		//Arrange
 		//Get a count of number of values in the table
-		List<Venue> venueList = venueDAO.getAllVenues();
+		List<Space> spaceList = spaceDAO.getAllSpaces();
 	}
 
 }

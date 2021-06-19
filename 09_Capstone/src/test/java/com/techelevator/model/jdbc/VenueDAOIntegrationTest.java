@@ -11,63 +11,23 @@ import com.techelevator.model.VenueDAO;
 import com.techelevator.model.Venue;
 import java.util.List;
 
-public abstract class VenueDAOIntegrationTest {
+public class VenueDAOIntegrationTest extends DAOIntegrationTest {
 
 	/*
 	 * Using this particular implementation of DataSource so that every database
 	 * interaction is part of the same database session and hence the same database
 	 * transaction
+	 *
+
 	 */
-	private static SingleConnectionDataSource dataSource;
+
 	private JdbcTemplate jdbcTemplate;
 	private VenueDAO venueDAO;
-	private Venue venue;
-
-	/*
-	 * Before any tests are run, this method initializes the datasource for testing.
-	 */
-	@BeforeClass
-	public static void setupDataSource() {
-		dataSource = new SingleConnectionDataSource();
-		dataSource.setUrl("jdbc:postgresql://localhost:5432/excelsior_venues");
-		dataSource.setUsername("postgres");
-		dataSource.setPassword("postgres1");
-		/*
-		 * The following line disables autocommit for connections returned by this
-		 * DataSource. This allows us to rollback any changes after each test
-		 */
-		dataSource.setAutoCommit(false);
-	}
-
-	/*
-	 * After all tests have finished running, this method will close the DataSource
-	 */
-	@AfterClass
-	public static void closeDataSource() throws SQLException {
-		dataSource.destroy();
-	}
-
-	/*
-	 * After each test, we rollback any changes that were made to the database so
-	 * that everything is clean for the next test
-	 */
-	@After
-	public void rollback() throws SQLException {
-		dataSource.getConnection().rollback();
-	}
-
-	/*
-	 * This method provides access to the DataSource for subclasses so that they can
-	 * instantiate a DAO for testing
-	 */
-	protected DataSource getDataSource() {
-		return dataSource;
-	}
 
 	@Before
 	public void setupBeforeTest() {
-		venueDAO = new JDBCVenueDAO(dataSource);
-		jdbcTemplate = new JdbcTemplate(dataSource);
+		venueDAO = new JDBCVenueDAO(getDataSource());
+		jdbcTemplate = new JdbcTemplate(getDataSource());
 	}
 
 	/**
@@ -78,6 +38,29 @@ public abstract class VenueDAOIntegrationTest {
 		//Arrange
 		//Get a count of number of values in the table
 		List<Venue> venueList = venueDAO.getAllVenues();
+
+		//insert multiple venues
+		Venue venueOne = getVenue(50, "New Venue",  4, "what a cool new venue");
+		Venue venueTwo = getVenue(67, "Second New Venue",  2, "wowow even cooler new venue");
+		venueDAO.create(venueOne);
+		venueDAO.create(venueTwo);
+
+		//Act
+		List<Venue> venuesFromDatabase = venueDAO.getAllVenues();
+
+		//Assert
+		Assert.assertEquals((venueList.size() + 2), venuesFromDatabase.size());
+
 	}
 
+
+	private Venue getVenue(int id, String venue_name, int city_id, String description) {
+		Venue venue = new Venue();
+		venue.setId(id);
+		venue.setName(venue_name);
+		venue.setCity_id(city_id);
+		venue.setDescription(description);
+
+		return venue;
+	}
 }

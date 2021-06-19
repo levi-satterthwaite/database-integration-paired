@@ -6,6 +6,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Date;
 
 public interface SpaceDAO {
 
@@ -21,4 +22,6 @@ public interface SpaceDAO {
      * @return venue spaces as Space objects in a List
      */
     List<Space> getSpacesByVenue(int venue_id);
+
+    List<Space> getAvailableSpacesByDateIdAndOccupancy(String start_date, String end_date, int peopleAttending, int space_id);
 }

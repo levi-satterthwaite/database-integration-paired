@@ -15,4 +15,6 @@ public interface VenueDAO {
      * @return all venues as Venue objects in a List
      */
     List<Venue> getAllVenues();
+
+    void create (Venue venue);
 }
