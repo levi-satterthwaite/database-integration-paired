@@ -62,13 +62,14 @@ public class ExcelsiorCLI {
 				String venueMenuInput = menu.venueDetailsMenu(allVenues, input);
 
 				if(venueMenuInput.equals("1")) {
+
 					int venueId = menu.venueIndexToVenueId(allVenues, input);
 					List<Space> venueSpacesList = spaceDAO.getSpacesByVenue(venueId);
 					String venueSpacesInput = menu.venueSpaces(allVenues, venueSpacesList, venueId, input);
 
 
 					if(venueSpacesInput.equals("1")) {
-						menu.reserveSpace(venueSpacesList);
+						menu.reserveSpace(venueSpacesList, venueId);
 						//List<Space> spacesBySearch = reservationDAO.getAvailableSpacesByDateIdAndOccupancy();
 					}
 				}

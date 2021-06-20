@@ -4,9 +4,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import javax.sql.DataSource;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.sql.Date;
 
 public interface SpaceDAO {
 
@@ -23,5 +24,5 @@ public interface SpaceDAO {
      */
     List<Space> getSpacesByVenue(int venue_id);
 
-    List<Space> getAvailableSpacesByDateIdAndOccupancy(String start_date, String end_date, int peopleAttending, int space_id);
+    List<Space> getAvailableSpacesByDateIdAndOccupancy(LocalDate start_date, LocalDate end_Date, int peopleAttending, int venue_id);
 }

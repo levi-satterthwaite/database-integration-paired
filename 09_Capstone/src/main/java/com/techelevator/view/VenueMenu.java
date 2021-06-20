@@ -1,11 +1,14 @@
 package com.techelevator.view;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.List;
 import java.time.Month;
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.techelevator.model.Venue;
 import com.techelevator.model.VenueDAO;
@@ -160,17 +163,33 @@ public class VenueMenu {
             return venueSpacesInput;
     }
 
-    public void reserveSpace(List<Space> spaces) {
+    public void reserveSpace(List<Space> spaces, int venueId) {
 
-        System.out.println("When do you need the space (MM/DD/YYYY)?");
+        System.out.println("When do you need the space (YYYY-MM-DD)?");
         String startDate = in.nextLine();
-        System.out.println("How many days will you need the space?");
-        int daysNeeded = in.nextInt();
+        System.out.println("To what date will you need it (YYYY-MM-DD?");
+        String endDate = in.nextLine();
         System.out.println("How many people will be in attendance?");
         int peopleAttending = in.nextInt();
-        String endDate = "";
 
-        List<Space> spacesBySearch = spaceDAO.getAvailableSpacesByDateIdAndOccupancy(startDate, endDate, peopleAttending, space.getId());
+        LocalDate userStartDate = LocalDate.parse(startDate);
+        LocalDate userEndDate = LocalDate.parse(endDate);
+
+//        try {
+//            userStartDate = new SimpleDateFormat("YYYY-MM-DD").parse(startDate);
+//        } catch (ParseException e) {
+//            return;
+//        }
+//
+//        try {
+//            userEndDate = new SimpleDateFormat("YYYY-MM-DD").parse(endDate);
+//        } catch (ParseException e) {
+//            return;
+//        }
+
+        //int totalDays = Days.daysBetween(userStartDate, userEndDate).getDays();
+
+        List<Space> spacesBySearch = spaceDAO.getAvailableSpacesByDateIdAndOccupancy(userStartDate, userEndDate, peopleAttending, venueId);
 
         System.out.println();
         System.out.println("The following spaces are available based on your needs:");
@@ -181,18 +200,34 @@ public class VenueMenu {
             for (Space space : spacesBySearch) {
                 boolean isAccessible = space.getIs_accessible();
                 String accessibility = "";
-                BigDecimal totalCost = space.getDaily_rate().multiply(BigDecimal.valueOf(daysNeeded));
+                //BigDecimal totalCost = space.getDaily_rate().multiply(BigDecimal.valueOf(endDate));
 
                 if(isAccessible = true) {
                     accessibility = "Yes";
                 } else {
                     accessibility = "No";
                 }
-                System.out.printf("%-10s %-28s %-15s %-15s %-15s %-15s %n", space.getId(), space.getName(), "$" + space.getDaily_rate(), space.getMax_occupancy(), accessibility, "$" + totalCost);
+                System.out.printf("%-10s %-28s %-15s %-15s %-15s %-15s %n", space.getId(), space.getName(), "$" + space.getDaily_rate(), space.getMax_occupancy(), accessibility, "$");
             }
+        } else {
+            System.out.println("No results.");
         }
 
         System.out.println();
         System.out.println("Which space would you like to reserve (enter 0 to cancel)? ");
+        String spaceToReserve = in.nextLine();
+        System.out.println("Who is this reservation for?");
+        String whoReservationIsFor = in.nextLine();
+        System.out.println();
+        System.out.println("Thanks for submitting your reservation! The details for your event are listed below: ");
+        System.out.println();
+        System.out.println("Confirmation #: " + reservation.getId());
+        System.out.println("Venue: ");
+        System.out.println("Space: ");
+        System.out.println("Reserved for: " + whoReservationIsFor);
+        System.out.println("Attendees: " + peopleAttending);
+        System.out.println("Arrival Date: " + startDate);
+        System.out.println("Depart Date: ");
+        System.out.println("Total Cost: ");
     }
 }

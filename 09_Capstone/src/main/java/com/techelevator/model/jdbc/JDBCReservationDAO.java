@@ -5,7 +5,8 @@ import com.techelevator.model.ReservationDAO;
 import com.techelevator.model.Space;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
